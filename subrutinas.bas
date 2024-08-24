@@ -5,22 +5,17 @@
 ' Fecha de creación: 24/08/2024
 
 #include <input.bas>
-#include <string.bas>
 
 Border 0: Paper 0: Ink 7: Cls
 Bold 1
 
-DIM Salas(3) AS STRING
-DIM Descripciones(3) AS STRING
-DIM Conexiones(3,3) AS STRING
-DIM Objetos(3,3) AS STRING
-DIM Inventario(10) AS STRING
+DIM Salas(3) 
+DIM Descripciones(3)
+DIM Conexiones(3,3)
+DIM Objetos(3,3)
+DIM Inventario(10)
 
-DIM Comando AS STRING
-DIM Ubicacion AS UBYTE
-DIM NumObjetos AS UBYTE
-
-LET Ubicacion = 1 
+LET Ubicacion = 1
 LET NumObjetos = 0
 
 
@@ -48,7 +43,6 @@ Objetos(0, 1) = "llave"
 Objetos(1, 0) = "monstruo"
 Objetos(2, 0) = "libro antiguo"
 
-
 ' Iniciar juego
 PRINT "Bienvenido a la aventura."
 GOSUB 600  ' Mostrar la descripción inicial
@@ -57,7 +51,7 @@ GOTO COMANDO_PRINCIPAL
 ' Loop principal
 LOOP_PRINCIPAL:
 PRINT "¿Qué quieres hacer? "
-LET Comando = INPUT(20)
+INPUT Comando
 COMANDO_PRINCIPAL:
 GOSUB 700  ' Ejecutar comando
 GOTO LOOP_PRINCIPAL
@@ -68,7 +62,6 @@ PRINT Descripciones(Ubicacion)
 FOR I = 1 TO 3
   IF Objetos(Ubicacion, I) <> "" THEN 
     PRINT "Ves un "+ Objetos(Ubicacion, I)
-  ENDIF
 NEXT I
 RETURN
 
@@ -119,7 +112,7 @@ IF LEFT(Comando, 5) = "MIRAR" THEN
 ENDIF
 
 IF LEFT(Comando, 2) = "IR" THEN 
-  LET Direccion = MID(Comando, 4, 30) ' el tercer parametro hay que revisar, es donde termina la cadena y deberia de ser variable
+  LET Direccion = MID(Comando, 4)
   GOSUB 500
   RETURN
 ENDIF
@@ -134,7 +127,7 @@ RETURN
 
 ' Tomar un objeto
 TOMAR_OBJ:
-LET Objeto = MID(Comando, 6, 30)
+LET Objeto = MID(Comando, 6)
 FOR I = 1 TO 3
   IF Objetos(Ubicacion, I) = Objeto THEN
     LET NumObjetos = NumObjetos + 1
