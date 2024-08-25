@@ -1,15 +1,5 @@
 
-' Describir la ubicación actual
-SUB getUbicacion ( Descripcion AS STRING, Objeto AS STRING )
-   PRINT Descripcion
-   DIM I AS UBYTE
-   FOR I = 0 TO 2 STEP 1
-     IF Objeto <> "" THEN 
-      PRINT "Ves un "+ Objeto
-     END IF
-   NEXT I
-   RETURN
-END SUB
+
 
 
 sub moverJugador ( Conexion AS STRING, Ubicacion AS UBYTE, Comando AS STRING)
@@ -56,7 +46,7 @@ SUB ejecutarComando(Comando AS STRING)
 
   IF LEFT(Comando, 2) = "ir" THEN 
     LET Direccion = MID(Comando, 4, 30) ' el tercer parametro hay que revisar, es donde termina la cadena y deberia de ser variable
-    ' GOSUB Mover_jugador
+    moverJugador()
     RETURN
   ENDIF
 

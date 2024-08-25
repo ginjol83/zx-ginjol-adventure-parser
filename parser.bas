@@ -6,11 +6,11 @@
 
 #include <input.bas>
 #include <string.bas>
-#include "subrutinas.bas"
+' #include "subrutinas.bas"
 
 
-Border 0: Paper 0: Ink 7: Cls
-Bold 1
+Border 1: Paper 0: Ink 10: Cls
+Bold 3
 
 DIM Salas(3) AS STRING
 DIM Descripciones(3) AS STRING
@@ -22,7 +22,7 @@ DIM Comando AS STRING
 DIM Ubicacion AS UBYTE
 DIM NumObjetos AS UBYTE
 
-LET Ubicacion = 1 
+LET Ubicacion = 0 
 LET NumObjetos = 0
 
 
@@ -51,12 +51,53 @@ Objetos(1, 0) = "monstruo"
 Objetos(2, 0) = "libro antiguo"
 
 
-' Iniciar juego
-PRINT "Bienvenido a la aventura."
+' Definicion de funciones 
 
+' Describir la ubicación actual
+SUB getUbicacion ()
+   PRINT at 2,0; Descripciones(Ubicacion)
+   
+   DIM I AS UBYTE
+   FOR I = 0 TO 2 STEP 1
+     IF Objetos(Ubicacion,I) <> "" THEN 
+      PRINT "Ves un "+ Objetos(Ubicacion,I)
+     END IF
+   NEXT I
+   RETURN
+END SUB
+
+
+SUB ejecutarComando(Comando AS STRING)
+  Border 1: Paper 0: Ink 10: Cls
+  Bold 3
+  IF LEFT(Comando, 5) = "mirar" THEN 
+    PRINT Comando
+    ' getUbicacion() 
+    RETURN
+  ENDIF
+
+  IF LEFT(Comando, 2) = "ir" THEN 
+    LET Direccion = MID(Comando, 4, 30) ' el tercer parametro hay que revisar, es donde termina la cadena y deberia de ser variable
+    ' moverJugador()
+    RETURN
+  ENDIF
+
+  IF LEFT(Comando, 5) = "tomar" THEN 
+    ' GOSUB TOMAR_OBJ 
+    RETURN
+  ENDIF
+
+  PRINT "No entiendo ese comando."
+END SUB
+
+
+
+' Iniciar juego
+PRINT at 0,0; "Bienvenido a la aventura."
 
 ' Mostrar la descripcion inicial
-getUbicacion(Descripciones(0),"")
+getUbicacion()
+
 ' Loop principal
 DO
 
